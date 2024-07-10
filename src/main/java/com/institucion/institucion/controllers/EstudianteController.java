@@ -1,16 +1,15 @@
 package com.institucion.institucion.controllers;
 
+import com.institucion.institucion.util.Constant;
 import com.institucion.institucion.dto.EstudianteDto;
 import com.institucion.institucion.dto.MensajeDto;
 import com.institucion.institucion.facade.EstudianteFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RequestMapping("/institucion")
 @CrossOrigin
@@ -22,39 +21,56 @@ public class EstudianteController {
 
     @GetMapping("estudiantes")
     @ResponseStatus(HttpStatus.OK)
-    public List<EstudianteDto> selectAll() {
-        List<EstudianteDto> list = null;
+    public ResponseEntity<MensajeDto> selectAll() {
+        MensajeDto mensajeDto = new MensajeDto();
 
         try {
-            list = this.estudianteFacade.selectAll();
+            List<EstudianteDto> estudiante = this.estudianteFacade.selectAll();
+            mensajeDto.setStatus(Constant.Estatus_200);
+            mensajeDto.setMensaje(Constant.mensajeEx);
+            mensajeDto.setCode(Constant.query_ok);
+            mensajeDto.setData(estudiante);
         }catch (Exception exception){
-            exception.printStackTrace();
+            mensajeDto.setStatus(Constant.Estatus_400);
+            mensajeDto.setMensaje(exception.getMessage());
+            mensajeDto.setCode(Constant.error);
         }
-        return list;
+        return ResponseEntity.ok(mensajeDto);
     }
 
 
     @PostMapping("estudiantes")
     @ResponseStatus(HttpStatus.CREATED)
-    public void InsertEstudiante(@RequestBody EstudianteDto estudianteDto) {
+    public ResponseEntity<MensajeDto> InsertEstudiante(@RequestBody EstudianteDto estudianteDto) {
+        MensajeDto mensajeDto = new MensajeDto();
         try {
             this.estudianteFacade.InsertEstudiante(estudianteDto);
+            mensajeDto.setStatus(Constant.Estatus_200);
+            mensajeDto.setMensaje(Constant.mensajeCreate);
+            mensajeDto.setCode(Constant.query_ok);
         }catch (Exception exception){
-            exception.printStackTrace();
+            mensajeDto.setStatus(Constant.Estatus_400);
+            mensajeDto.setMensaje(exception.getMessage());
+            mensajeDto.setCode(Constant.error);
         }
-
+        return ResponseEntity.ok(mensajeDto);
     }
 
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> deleteEstudiante(@PathVariable("id") Integer identidad) {
+    public ResponseEntity<MensajeDto> deleteEstudiante(@PathVariable("id") Integer identidad) {
+        MensajeDto mensajeDto = new MensajeDto();
         try {
             this.estudianteFacade.EstudianteDelete(identidad);
-            return ResponseEntity.status(HttpStatus.OK).body("El registro se eliminó exitosamente");
+            mensajeDto.setStatus(Constant.Estatus_200);
+            mensajeDto.setMensaje(Constant.mensajeDelete);
+            mensajeDto.setCode(Constant.query_ok);
         } catch (Exception exception) {
-            exception.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al eliminar el registro");
+            mensajeDto.setStatus(Constant.Estatus_400);
+            mensajeDto.setMensaje(exception.getMessage());
+            mensajeDto.setCode(Constant.error);
         }
+        return ResponseEntity.ok(mensajeDto);
     }
 
     @PutMapping("estudiantes")
@@ -63,26 +79,34 @@ public class EstudianteController {
         MensajeDto mensajeDto = new MensajeDto();
         try {
             this.estudianteFacade.EditEstudiante(estudianteDto);
-            mensajeDto.setStatus("200");
-            mensajeDto.setMensaje("actualizado con exito");
+            mensajeDto.setStatus(Constant.Estatus_200);
+            mensajeDto.setMensaje(Constant.mensajeEdit);
+            mensajeDto.setCode(Constant.query_ok);
         }catch (Exception exception){
-            exception.printStackTrace();
-            mensajeDto.setStatus("400");
-            mensajeDto.setMensaje("algo fallo" + exception.getMessage());
+            mensajeDto.setStatus(Constant.Estatus_400);
+            mensajeDto.setMensaje(exception.getMessage());
+            mensajeDto.setCode(Constant.error);
         }
-return ResponseEntity.ok(mensajeDto);
+        return ResponseEntity.ok(mensajeDto);
     }
 
     @GetMapping("/estudiante/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public EstudianteDto EstudianteID(@PathVariable("id") Integer identidad) {
-        EstudianteDto estudiante = null ;
+    public ResponseEntity<MensajeDto> EstudianteID(@PathVariable("id") Integer identidad) {
+        MensajeDto mensajeDto = new MensajeDto();
+
     try {
-            estudiante = this.estudianteFacade.EstudianteID(identidad);
+        EstudianteDto estudiante = this.estudianteFacade.EstudianteID(identidad);
+        mensajeDto.setStatus(Constant.Estatus_200);
+        mensajeDto.setMensaje(Constant.mensajeEx);
+        mensajeDto.setCode(Constant.query_ok);
+        mensajeDto.setData(estudiante);
         } catch (Exception exception) {
-            exception.printStackTrace();
+        mensajeDto.setStatus(Constant.Estatus_400);
+        mensajeDto.setMensaje(exception.getMessage());
+        mensajeDto.setCode(Constant.error);
         }
-    return estudiante;
+        return ResponseEntity.ok(mensajeDto);
     }
 
 }

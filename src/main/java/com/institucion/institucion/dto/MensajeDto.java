@@ -4,6 +4,9 @@ public class MensajeDto {
     private String status;
     private Object data;
     private String mensaje;
+    private String code;
+
+
 
     public String getStatus() {
         return status;
@@ -27,5 +30,13 @@ public class MensajeDto {
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }
