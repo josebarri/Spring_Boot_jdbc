@@ -1,53 +1,54 @@
 package com.institucion.institucion.facade;
 
-import com.institucion.institucion.dao.EstudianteDao;
 import com.institucion.institucion.dto.EstudianteDto;
 import com.institucion.institucion.exception.FacadeExecption;
-import com.institucion.institucion.exception.ManagerException;
 import com.institucion.institucion.manager.EstudianteManager;
+import com.institucion.institucion.util.generic.CrudFaca;
+import com.institucion.institucion.util.generic.CrudMan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
+
 @Component
 @Transactional
-public class EstudianteFacadeImpl implements EstudianteFacade {
+public class EstudianteFacadeImpl implements CrudFaca<EstudianteDto>, EstudianteFacade {
     @Autowired
     private EstudianteManager estudianteManager;
-
+    @Autowired
+    private CrudMan<EstudianteDto> crudaMan;
     @Override
     public List<EstudianteDto> selectAll() throws FacadeExecption {
         try {
-            return this.estudianteManager.selectAll();
+            return this.crudaMan.selectAll();
         } catch (Exception exception) {
             throw new FacadeExecption(exception);
         }
     }
 
     @Override
-    public void InsertEstudiante(EstudianteDto estudianteDto) throws FacadeExecption {
+    public void insert(EstudianteDto estudianteDto) throws FacadeExecption {
         try {
-            this.estudianteManager.InsertEstudiante(estudianteDto);
+            this.crudaMan.insert(estudianteDto);
         } catch (Exception exception) {
             throw new FacadeExecption(exception);
         }
     }
 
     @Override
-    public void EstudianteDelete(Integer identidad) throws FacadeExecption {
+    public void delete(Integer identidad) throws FacadeExecption {
         try {
-            this.estudianteManager.deleteestudiante(identidad);
+            this.crudaMan.delete(identidad);
         }catch (Exception exception){
             throw new FacadeExecption(exception);
         }
     }
 
     @Override
-    public EstudianteDto EstudianteID(Integer identidad) throws FacadeExecption {
+    public EstudianteDto selectId(Integer identidad) throws FacadeExecption {
         try {
-           return this.estudianteManager.EstudianteId(identidad);
+           return this.crudaMan.selectId(identidad);
 
         } catch (Exception exception) {
             throw new FacadeExecption(exception);
@@ -57,9 +58,18 @@ public class EstudianteFacadeImpl implements EstudianteFacade {
     }
 
     @Override
-    public void EditEstudiante(EstudianteDto estudianteDto) throws FacadeExecption {
+    public void update(EstudianteDto estudianteDto) throws FacadeExecption {
         try {
-            this.estudianteManager.EditEstudiante(estudianteDto);
+            this.crudaMan.update(estudianteDto);
+        } catch (Exception exception) {
+            throw new FacadeExecption(exception);
+        }
+    }
+
+    @Override
+    public List<EstudianteDto> orderAge() throws FacadeExecption {
+        try {
+            return this.estudianteManager.orderAge();
         } catch (Exception exception) {
             throw new FacadeExecption(exception);
         }
