@@ -18,7 +18,7 @@ public class EstudianteFacadeImpl implements EstudianteFacade {
     private EstudianteManager estudianteManager;
 
     @Override
-    public List<Map<String, Object>> selectAll() throws FacadeExecption {
+    public List<EstudianteDto> selectAll() throws FacadeExecption {
         try {
             return this.estudianteManager.selectAll();
         } catch (Exception exception) {
@@ -36,10 +36,31 @@ public class EstudianteFacadeImpl implements EstudianteFacade {
     }
 
     @Override
-    public void EstudianteDelete(EstudianteDto estudianteDto) throws FacadeExecption {
+    public void EstudianteDelete(Integer identidad) throws FacadeExecption {
         try {
-            this.estudianteManager.deleteestudiante(estudianteDto);
+            this.estudianteManager.deleteestudiante(identidad);
         }catch (Exception exception){
+            throw new FacadeExecption(exception);
+        }
+    }
+
+    @Override
+    public EstudianteDto EstudianteID(Integer identidad) throws FacadeExecption {
+        try {
+           return this.estudianteManager.EstudianteId(identidad);
+
+        } catch (Exception exception) {
+            throw new FacadeExecption(exception);
+        }
+
+
+    }
+
+    @Override
+    public void EditEstudiante(EstudianteDto estudianteDto) throws FacadeExecption {
+        try {
+            this.estudianteManager.EditEstudiante(estudianteDto);
+        } catch (Exception exception) {
             throw new FacadeExecption(exception);
         }
     }

@@ -15,7 +15,7 @@ public class EstudianteManagerImpl implements EstudianteManager{
 @Autowired
    private EstudianteDao estudianteDao;
     @Override
-    public List<Map<String, Object>> selectAll() throws ManagerException {
+    public List<EstudianteDto> selectAll() throws ManagerException {
         try {
             return this.estudianteDao.selectAll();
         }catch (Exception exception){
@@ -33,9 +33,27 @@ public class EstudianteManagerImpl implements EstudianteManager{
     }
 
     @Override
-    public void deleteestudiante(EstudianteDto estudianteDto) throws ManagerException {
+    public void deleteestudiante(Integer identidad) throws ManagerException {
         try {
-            this.estudianteDao.DeleteEstudiante(estudianteDto);
+            this.estudianteDao.DeleteEstudiante(identidad);
+        }catch (Exception exception){
+            throw new ManagerException(exception);
+        }
+    }
+
+    @Override
+    public EstudianteDto EstudianteId(Integer identidad) throws ManagerException {
+        try {
+            return this.estudianteDao.EstudianteID(identidad);
+        }catch (Exception exception){
+            throw new ManagerException(exception);
+        }
+    }
+
+    @Override
+    public void EditEstudiante(EstudianteDto estudianteDto) throws ManagerException {
+        try {
+            this.estudianteDao.EditEstudiante(estudianteDto);
         }catch (Exception exception){
             throw new ManagerException(exception);
         }

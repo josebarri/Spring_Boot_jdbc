@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface EstudianteFacade {
-    public List<Map<String, Object>> selectAll() throws FacadeExecption;
+    public List<EstudianteDto> selectAll() throws FacadeExecption;
     public void InsertEstudiante(EstudianteDto estudianteDto) throws FacadeExecption;
-    public void EstudianteDelete(EstudianteDto estudianteDto) throws FacadeExecption;
+    public void EstudianteDelete(Integer identidad) throws FacadeExecption;
+    public EstudianteDto EstudianteID(Integer identidad) throws FacadeExecption;
+    public void EditEstudiante(EstudianteDto estudianteDto) throws FacadeExecption;
 }
