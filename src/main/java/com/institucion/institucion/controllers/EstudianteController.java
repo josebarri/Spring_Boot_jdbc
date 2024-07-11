@@ -1,10 +1,10 @@
 package com.institucion.institucion.controllers;
 
+import com.institucion.institucion.exception.ServiceException;
 import com.institucion.institucion.util.Constant;
 import com.institucion.institucion.dto.EstudianteDto;
 import com.institucion.institucion.dto.MensajeDto;
-import com.institucion.institucion.facade.EstudianteFacade;
-import com.institucion.institucion.util.generic.CrudFaca;
+import com.institucion.institucion.util.generic.CrudUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class EstudianteController {
+    //@Autowired
+   // private EstudianteFacade estudianteFacade;
     @Autowired
-    private EstudianteFacade estudianteFacade;
-    @Autowired
-    private CrudFaca<EstudianteDto> crudFaca;
+    private CrudUtil<EstudianteDto, ServiceException> crudUtil;
 
 
     @GetMapping("estudiantes")
@@ -28,7 +28,7 @@ public class EstudianteController {
         MensajeDto mensajeDto = new MensajeDto();
 
         try {
-            List<EstudianteDto> estudiante = this.crudFaca.selectAll();
+            List<EstudianteDto> estudiante = this.crudUtil.selectAll();
             mensajeDto.setStatus(Constant.Estatus_200);
             mensajeDto.setMensaje(Constant.mensajeEx);
             mensajeDto.setCode(Constant.query_ok);
@@ -47,7 +47,7 @@ public class EstudianteController {
     public ResponseEntity<MensajeDto> InsertEstudiante(@RequestBody EstudianteDto estudianteDto) {
         MensajeDto mensajeDto = new MensajeDto();
         try {
-            this.crudFaca.insert(estudianteDto);
+            this.crudUtil.insert(estudianteDto);
             mensajeDto.setStatus(Constant.Estatus_200);
             mensajeDto.setMensaje(Constant.mensajeCreate);
             mensajeDto.setCode(Constant.query_ok);
@@ -64,7 +64,7 @@ public class EstudianteController {
     public ResponseEntity<MensajeDto> deleteEstudiante(@PathVariable("id") Integer identidad) {
         MensajeDto mensajeDto = new MensajeDto();
         try {
-            this.crudFaca.delete(identidad);
+            this.crudUtil.delete(identidad);
             mensajeDto.setStatus(Constant.Estatus_200);
             mensajeDto.setMensaje(Constant.mensajeDelete);
             mensajeDto.setCode(Constant.query_ok);
@@ -81,7 +81,7 @@ public class EstudianteController {
     public ResponseEntity<MensajeDto> EditEstudiante(@RequestBody EstudianteDto estudianteDto) {
         MensajeDto mensajeDto = new MensajeDto();
         try {
-            this.crudFaca.update(estudianteDto);
+            this.crudUtil.update(estudianteDto);
             mensajeDto.setStatus(Constant.Estatus_200);
             mensajeDto.setMensaje(Constant.mensajeEdit);
             mensajeDto.setCode(Constant.query_ok);
@@ -99,7 +99,7 @@ public class EstudianteController {
         MensajeDto mensajeDto = new MensajeDto();
 
     try {
-        EstudianteDto estudiante = this.crudFaca.selectId(identidad);
+        EstudianteDto estudiante = this.crudUtil.selectId(identidad);
         mensajeDto.setStatus(Constant.Estatus_200);
         mensajeDto.setMensaje(Constant.mensajeEx);
         mensajeDto.setCode(Constant.query_ok);
@@ -112,24 +112,24 @@ public class EstudianteController {
         return ResponseEntity.ok(mensajeDto);
     }
 
-    @GetMapping("estudiantes/orderAge")
+   // @GetMapping("estudiantes/orderAge")
 
-    public ResponseEntity<MensajeDto> estudianteedad() {
-        MensajeDto mensajeDto = new MensajeDto();
+   // public ResponseEntity<MensajeDto> estudianteedad() {
+     //   MensajeDto mensajeDto = new MensajeDto();
 
-        try {
-            List<EstudianteDto> estudiante = this.estudianteFacade.orderAge();
-            mensajeDto.setStatus(Constant.Estatus_200);
-            mensajeDto.setMensaje(Constant.mensajeEx);
-            mensajeDto.setCode(Constant.query_ok);
-            mensajeDto.setData(estudiante);
-        }catch (Exception exception){
-            mensajeDto.setStatus(Constant.Estatus_400);
-            mensajeDto.setMensaje(exception.getMessage());
-            mensajeDto.setCode(Constant.error);
-        }
-        return ResponseEntity.ok(mensajeDto);
-    }
+       // try {
+          //  List<EstudianteDto> estudiante = this.estudianteFacade.orderAge();
+          //  mensajeDto.setStatus(Constant.Estatus_200);
+          //  mensajeDto.setMensaje(Constant.mensajeEx);
+          //  mensajeDto.setCode(Constant.query_ok);
+           // mensajeDto.setData(estudiante);
+       // }catch (Exception exception){
+       //     mensajeDto.setStatus(Constant.Estatus_400);
+          //  mensajeDto.setMensaje(exception.getMessage());
+          //  mensajeDto.setCode(Constant.error);
+       // }
+       // return ResponseEntity.ok(mensajeDto);
+  //  }
 }
 
 

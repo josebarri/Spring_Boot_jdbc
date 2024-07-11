@@ -3,15 +3,15 @@ package com.institucion.institucion.dao;
 import com.institucion.institucion.dto.EstudianteDto;
 import com.institucion.institucion.exception.DaoException;
 import com.institucion.institucion.mapper.EstudianteMapper;
-import com.institucion.institucion.util.generic.CrudDao;
+import com.institucion.institucion.util.generic.CrudUtil;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
+
 @Repository
-public class EsrudianteDaoImpl implements CrudDao<EstudianteDto>, EstudianteDao{
+public class EsrudianteDaoImpl implements CrudUtil<EstudianteDto, DaoException>{
 private JdbcTemplate jdbcTemplate;
 private  final String estudiantesAll = "SELECT * FROM estudiante";
 private  final String estudianteedad = "SELECT * FROM estudiante  where edad  BETWEEN 15 and 17";
@@ -89,12 +89,4 @@ public EsrudianteDaoImpl(JdbcTemplate jdbcTemplate){
         }
     }
 
-    @Override
-    public List<EstudianteDto> orderAge() throws DaoException {
-        try {
-            return this.jdbcTemplate.query(estudianteedad, new EstudianteMapper());
-        }catch (Exception exception){
-            throw new DaoException(exception);
-        }
-    }
 }
