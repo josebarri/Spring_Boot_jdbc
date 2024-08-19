@@ -12,6 +12,7 @@ public class EsrudianteDaoImpl implements EstudianteDao{
 private JdbcTemplate jdbcTemplate;
 private  final String estudiantesAll = "SELECT * FROM estudiante";
 private final String estudianteDelete = "DELETE FROM estudiante where identidad = ?";
+    private final String estudianteEdit = "UPDATE estudiante SET tipo_documento=?, nombres=?, apellidos=?, fecha_nacimiento=?, edad=?, grado=?, email=?, telefono_fijo=?, celular=? where identidad=?";
 private final String estudianteInsert = "INSERT INTO estudiante(identidad, tipo_documento, nombres, apellidos, fecha_nacimiento, edad, grado, email, telefono_fijo, celular) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 public EsrudianteDaoImpl(JdbcTemplate jdbcTemplate){
     this.jdbcTemplate = jdbcTemplate;
@@ -39,6 +40,25 @@ public EsrudianteDaoImpl(JdbcTemplate jdbcTemplate){
                                         estudianteDto.getEmail(),
                                         estudianteDto.getTelefono_fijo(),
                                         estudianteDto.getCelular());
+        }catch (Exception exception){
+            throw new DaoException(exception);
+        }
+    }
+
+    @Override
+    public void EditEstudiante(EstudianteDto estudianteDto) throws DaoException {
+        try {
+            this.jdbcTemplate.update(estudianteEdit,
+                    estudianteDto.getTipo_documento(),
+                    estudianteDto.getNombres(),
+                    estudianteDto.getApellidos(),
+                    estudianteDto.getFecha_nacimiento(),
+                    estudianteDto.getEdad(),
+                    estudianteDto.getGrado(),
+                    estudianteDto.getEmail(),
+                    estudianteDto.getTelefono_fijo(),
+                    estudianteDto.getCelular(),
+                    estudianteDto.getIdentidad());
         }catch (Exception exception){
             throw new DaoException(exception);
         }

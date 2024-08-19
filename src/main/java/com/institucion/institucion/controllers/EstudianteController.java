@@ -38,6 +38,14 @@ public class EstudianteController {
         }
 
     }
+    @PutMapping("estudiante")
+    public void EditEstudiante(@RequestBody EstudianteDto estudianteDto) {
+        try {
+            this.estudianteFacade.EditEstudiante(estudianteDto);
+        }catch (Exception exception){
+            exception.printStackTrace();
+        }
+    }
     @DeleteMapping("estudiantes")
     public void deleteEstudiante(@RequestBody EstudianteDto estudianteDto) {
         try {

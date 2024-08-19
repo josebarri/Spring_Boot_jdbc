@@ -9,5 +9,7 @@ import java.util.Map;
 public interface EstudianteDao {
     public List<Map<String, Object>> selectAll() throws DaoException;
     public void InsertEstudiante(EstudianteDto estudianteDto) throws DaoException;
+    public void EditEstudiante(EstudianteDto estudianteDto) throws DaoException;
+
     public void DeleteEstudiante(EstudianteDto estudianteDto) throws DaoException;
 }

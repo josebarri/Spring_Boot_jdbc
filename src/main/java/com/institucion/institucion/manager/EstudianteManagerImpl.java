@@ -11,14 +11,15 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class EstudianteManagerImpl implements EstudianteManager{
-@Autowired
-   private EstudianteDao estudianteDao;
+public class EstudianteManagerImpl implements EstudianteManager {
+    @Autowired
+    private EstudianteDao estudianteDao;
+
     @Override
     public List<Map<String, Object>> selectAll() throws ManagerException {
         try {
             return this.estudianteDao.selectAll();
-        }catch (Exception exception){
+        } catch (Exception exception) {
             throw new ManagerException(exception);
         }
     }
@@ -27,7 +28,7 @@ public class EstudianteManagerImpl implements EstudianteManager{
     public void InsertEstudiante(EstudianteDto estudianteDto) throws ManagerException {
         try {
             this.estudianteDao.InsertEstudiante(estudianteDto);
-        }catch (Exception exception){
+        } catch (Exception exception) {
             throw new ManagerException(exception);
         }
     }
@@ -36,7 +37,17 @@ public class EstudianteManagerImpl implements EstudianteManager{
     public void deleteestudiante(EstudianteDto estudianteDto) throws ManagerException {
         try {
             this.estudianteDao.DeleteEstudiante(estudianteDto);
-        }catch (Exception exception){
+        } catch (Exception exception) {
+            throw new ManagerException(exception);
+        }
+
+    }
+
+    @Override
+    public void EditEstudiante(EstudianteDto estudianteDto) throws ManagerException {
+        try {
+            this.estudianteDao.EditEstudiante(estudianteDto);
+        } catch (Exception exception) {
             throw new ManagerException(exception);
         }
     }

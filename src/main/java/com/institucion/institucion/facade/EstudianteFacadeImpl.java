@@ -43,5 +43,16 @@ public class EstudianteFacadeImpl implements EstudianteFacade {
             throw new FacadeExecption(exception);
         }
     }
+
+    @Override
+    public void EditEstudiante(EstudianteDto estudianteDto) throws FacadeExecption {
+        try {
+            this.estudianteManager.EditEstudiante(estudianteDto);
+        } catch (Exception exception) {
+            throw new FacadeExecption(exception);
+        }
+    }
+
+
 }
 

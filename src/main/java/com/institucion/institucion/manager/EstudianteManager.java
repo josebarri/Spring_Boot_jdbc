@@ -11,4 +11,5 @@ public interface EstudianteManager {
     public List<Map<String, Object>> selectAll() throws ManagerException;
     public void InsertEstudiante(EstudianteDto estudianteDto) throws ManagerException;
     public void deleteestudiante(EstudianteDto estudianteDto) throws ManagerException;
+    public void EditEstudiante(EstudianteDto estudianteDto) throws ManagerException;
 }
